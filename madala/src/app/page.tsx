@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import ProductCard from "@/components/ui/product-card";
-import { getSampleData } from "@/lib/getSampleData";
 import { getImageUrl } from "@/lib/getImageUrl";
+import { productService } from "@/services/productService";
+import { Product } from "@/types/product";
 
 const features = [
   {
@@ -40,18 +41,19 @@ const heroButtons = [
   }
 ];
 
-export default function Home() {
-  const data = getSampleData();
-  const featuredProducts = data.products.filter((product: any) => 
-    product.isFeatured || product.isHotTrend
-  ).slice(0, 6); 
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('vi-VN', {
-      style: 'currency',
-      currency: 'VND',
-    }).format(price);
-  };
+export default async function Home() {
+  // Lấy sản phẩm hot trend từ API
+  let hotTrendProducts: Product[] = [];
+  
+  try {
+    const response = await productService.getProducts({
+      hotTrend: true,
+      limit: 9
+    });
+    hotTrendProducts = response.data.products;
+  } catch (error) {
+    console.error('Error fetching hot trend products:', error);
+  }
 
   return (
     <div className="min-h-screen">
@@ -111,20 +113,28 @@ export default function Home() {
 
           {/* Products Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {featuredProducts.map((product: any) => (
-              <ProductCard
-                key={product.id}
-                id={product.id}
-                name={product.name}
-                slug={product.slug}
-                price={product.price}
-                salePrice={product.salePrice}
-                image={getImageUrl(product.images[0])}
-                rating={product.rating}
-                isHotTrend={product.isHotTrend}
-                isFeatured={product.isFeatured}
-              />
-            ))}
+            {hotTrendProducts.length > 0 ? (
+              hotTrendProducts.map((product: Product) => (
+                <ProductCard
+                  key={product.id}
+                  id={product.id}
+                  name={product.name}
+                  slug={product.slug}
+                  price={product.price}
+                  salePrice={product.salePrice}
+                  image={getImageUrl(product.images[0])}
+                  rating={product.rating}
+                  isHotTrend={product.isHotTrend}
+                  isFeatured={product.isFeatured}
+                />
+              ))
+            ) : (
+              <div className="col-span-full text-center py-12">
+                <p className="text-lg text-muted-foreground">
+                  Đang tải sản phẩm hot trend...
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="text-center">

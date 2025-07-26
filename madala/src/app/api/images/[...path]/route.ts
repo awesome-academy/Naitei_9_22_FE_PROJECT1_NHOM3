@@ -9,7 +9,7 @@ export async function GET(
   try {
     const { path: pathArray } = await params;
     const imagePath = pathArray.join('/');
-    const filePath = path.join(process.cwd(), 'src', 'images', imagePath);
+    const filePath = path.join(process.cwd(), 'public', imagePath);
     
     console.log('Requested image path:', imagePath);
     console.log('Full file path:', filePath);
@@ -49,7 +49,7 @@ export async function GET(
     return new NextResponse(imageBuffer, {
       headers: {
         'Content-Type': contentType,
-        'Cache-Control': 'public, max-age=31536000', // Cache 1 năm
+        'Cache-Control': 'public, max-age=31536000', 
       },
     });
   } catch (error) {
