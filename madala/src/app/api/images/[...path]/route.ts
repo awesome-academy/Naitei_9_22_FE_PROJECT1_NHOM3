@@ -9,7 +9,7 @@ export async function GET(
   try {
     const { path: pathArray } = await params;
     const imagePath = pathArray.join('/');
-    const filePath = path.join(process.cwd(), 'public', imagePath);
+    const filePath = path.join(process.cwd(), 'src', 'images', imagePath);
     
     console.log('Requested image path:', imagePath);
     console.log('Full file path:', filePath);
