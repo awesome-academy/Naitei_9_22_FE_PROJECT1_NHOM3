@@ -8,14 +8,17 @@ export async function GET(
 ) {
   try {
     const client = await clientPromise;
-    const db = client.db('mandala'); 
+    const db = client.db(process.env.MONGODB_DB); 
     
     const { slug } = await params; 
     
     // Tìm sản phẩm theo slug
     const product = await db.collection('products').findOne({
       slug: slug,
-      isActive: true
+      $or: [
+        { isActive: { $exists: false } }, 
+        { isActive: true }               
+      ]
     });
     
     if (!product) {

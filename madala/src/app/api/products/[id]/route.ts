@@ -9,7 +9,7 @@ export async function GET(
 ) {
   try {
     const client = await clientPromise;
-    const db = client.db('mandala');
+    const db = client.db(process.env.MONGODB_DB);
 
     const { id } = await params;
     let filter: any;
@@ -47,7 +47,7 @@ export async function GET(
     const relatedProducts = await db.collection('products')
       .find({
         _id: { $ne: product._id },
-        categoryIds: { $in: product.categoryIds },
+        categoryIds: { $in: Array.isArray(product.categoryIds) ? product.categoryIds : [] },
         isActive: true
       })
       .limit(4)

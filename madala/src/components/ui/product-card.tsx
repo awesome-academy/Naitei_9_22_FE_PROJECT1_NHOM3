@@ -1,4 +1,3 @@
-// app/components/ProductCard.tsx
 "use client";
 
 import Link from "next/link";
@@ -85,7 +84,7 @@ const ProductCard = ({
 
         {/* Quick Actions */}
         <div className="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <Button variant="mandala" className="w-full" size="sm">
+          <Button className="w-full bg-[#8BC34A] hover:bg-[#7AB23C] text-white" size="sm">
             <ShoppingCart className="h-4 w-4 mr-2" />
             MUA HÀNG
           </Button>
@@ -94,7 +93,7 @@ const ProductCard = ({
 
       <CardContent className="p-4">
         <Link href={`/products/${slug}`}>
-          <h3 className="font-medium text-sm mb-2 line-clamp-2 hover:text-primary transition-colors">
+          <h3 className="font-medium text-sm mb-2 line-clamp-2 hover:text-[#8BC34A] transition-colors">
             {name}
           </h3>
         </Link>
@@ -120,7 +119,7 @@ const ProductCard = ({
         <div className="flex items-center gap-2">
           {salePrice ? (
             <>
-              <span className="font-bold text-primary">
+              <span className="font-bold text-[#8BC34A]">
                 {formatPrice(salePrice)}
               </span>
               <span className="text-sm text-muted-foreground line-through">

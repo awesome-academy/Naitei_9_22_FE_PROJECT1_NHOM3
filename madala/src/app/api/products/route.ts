@@ -5,7 +5,7 @@ import clientPromise from '@/lib/mongodb';
 export async function GET(request: NextRequest) {
   try {
     const client = await clientPromise;
-    const db = client.db('mandala');
+    const db = client.db(process.env.MONGODB_DB);
     
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || '1');

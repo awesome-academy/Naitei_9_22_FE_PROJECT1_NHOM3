@@ -11,9 +11,6 @@ export async function GET(
     const imagePath = pathArray.join('/');
     const filePath = path.join(process.cwd(), 'public', imagePath);
     
-    console.log('Requested image path:', imagePath);
-    console.log('Full file path:', filePath);
-    
     // Kiểm tra file có tồn tại không
     if (!fs.existsSync(filePath)) {
       console.log('Image not found:', filePath);
@@ -25,27 +22,16 @@ export async function GET(
     
     // Xác định content type dựa trên extension
     const ext = path.extname(filePath).toLowerCase();
-    let contentType = 'image/jpeg'; // default
+    const extToContentType: Record<string, string> = {
+      '.png': 'image/png',
+      '.jpg': 'image/jpeg',
+      '.jpeg': 'image/jpeg',
+      '.gif': 'image/gif',
+      '.webp': 'image/webp',
+      '.svg': 'image/svg+xml',
+    };
     
-    switch (ext) {
-      case '.png':
-        contentType = 'image/png';
-        break;
-      case '.jpg':
-      case '.jpeg':
-        contentType = 'image/jpeg';
-        break;
-      case '.gif':
-        contentType = 'image/gif';
-        break;
-      case '.webp':
-        contentType = 'image/webp';
-        break;
-      case '.svg':
-        contentType = 'image/svg+xml';
-        break;
-    }
-
+    const contentType = extToContentType[ext] || 'application/octet-stream';
     return new NextResponse(imageBuffer, {
       headers: {
         'Content-Type': contentType,

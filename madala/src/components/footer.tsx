@@ -1,63 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Phone, Mail } from "lucide-react";
-
-const shippingLinks = [
-  {
-    href: "/shipping-policy",
-    text: "Chuyển hàng trực tuyến"
-  },
-  {
-    href: "/shipping-policy", 
-    text: "Điền từ chúng tôi gửi đến"
-  },
-  {
-    href: "/shipping-info",
-    text: "Chính sách vận chuyển"
-  },
-  {
-    href: "/shipping-info",
-    text: "Vận chuyển thông tin"
-  }
-];
-
-const accountLinks = [
-  {
-    href: "/account",
-    text: "Sản phẩm yêu thích"
-  },
-  {
-    href: "/account",
-    text: "Tài khoản"
-  },
-  {
-    href: "/account/orders",
-    text: "Đặt hàng"
-  },
-  {
-    href: "/login",
-    text: "Đăng nhập"
-  }
-];
-
-const paymentMethods = [
-  {
-    src: "/api/images/payments/mastercard.png",
-    alt: "Mastercard"
-  },
-  {
-    src: "/api/images/payments/visa.png",
-    alt: "Visa"
-  },
-  {
-    src: "/api/images/payments/paypal.png",
-    alt: "PayPal"
-  },
-  {
-    src: "/api/images/payments/maestro.png",
-    alt: "Maestro"
-  }
-];
+import { 
+  shippingLinks, 
+  supportLinks, 
+  informationLinks, 
+  accountLinks, 
+  paymentMethods 
+} from "@/constants/footerLinks";
 
 export default function Footer() {
   return (
@@ -111,26 +61,13 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-6 text-[#8BC34A]">HỖ TRỢ</h3>
             <ul className="space-y-3 text-sm text-gray-300">
-              <li>
-                <Link href="/faq" className="hover:text-primary transition-colors">
-                  Câu chuyện của chúng ta
-                </Link>
-              </li>
-              <li>
-                <Link href="/payment" className="hover:text-primary transition-colors">
-                  Thanh toán an toàn
-                </Link>
-              </li>
-              <li>
-                <Link href="/delivery" className="hover:text-primary transition-colors">
-                  Tùy chọn Vận Chuyển
-                </Link>
-              </li>
-              <li>
-                <Link href="/returns" className="hover:text-primary transition-colors">
-                  Chính sách vận chuyển
-                </Link>
-              </li>
+              {supportLinks.map((link, index) => (
+                <li key={index}>
+                  <Link href={link.href} className="hover:text-primary transition-colors">
+                    {link.text}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -138,26 +75,13 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-6 text-[#8BC34A]">THÔNG TIN</h3>
             <ul className="space-y-3 text-sm text-gray-300">
-              <li>
-                <Link href="/about" className="hover:text-primary transition-colors">
-                  Về Chúng Tôi
-                </Link>
-              </li>
-              <li>
-                <Link href="/privacy" className="hover:text-primary transition-colors">
-                  Điều khoản & điều kiện
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms" className="hover:text-primary transition-colors">
-                  Chính Sách Riêng Tư
-                </Link>
-              </li>
-              <li>
-                <Link href="/returns" className="hover:text-primary transition-colors">
-                  Đơn đặt hàng và Returns
-                </Link>
-              </li>
+              {informationLinks.map((link, index) => (
+                <li key={index}>
+                  <Link href={link.href} className="hover:text-primary transition-colors">
+                    {link.text}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
